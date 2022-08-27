@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8208317725725671441}
   - component: {fileID: 3875424729144203210}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39edb9224f08da247a13d6c13b1bc687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: Tile
+  path: Node

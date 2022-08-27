@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     }
 
     public MazeRenderer mazeRender;
+    public Grid grid;
     public GameObject player;
     public GameState currentState;
 
@@ -37,6 +38,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         GenerateMaze();
+
     }
 
     public void RestartGame()
@@ -50,6 +52,14 @@ public class GameController : MonoBehaviour
         mazeRender.GenerateMaze();
         player.transform.position = mazeRender.GetStartPosition();
         currentState = GameState.Playing;
+        grid.SetGridSize(mazeRender.width, mazeRender.height);
+        StartCoroutine(WaitToCreatePath());
+    }
+
+    IEnumerator WaitToCreatePath()
+    {
+        yield return new WaitForSeconds(0.25f);
+        grid.GeneratePath();
     }
 
     public void CompleteMaze()

@@ -188,7 +188,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &17710608
 GameObject:
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 17710609}
   m_Layer: 0
-  m_Name: TilesContainer
+  m_Name: NodesContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -390,7 +390,7 @@ Transform:
   - {fileID: 1867403132}
   - {fileID: 516868635}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &516868634
 GameObject:
@@ -858,6 +858,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7786489863990895489}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1399253918 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7786489862629984287, guid: b1747824acdfdac4e940d984e5efa435,
+    type: 3}
+  m_PrefabInstance: {fileID: 7786489863990895489}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1436888314
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,6 +1000,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436888314}
   m_CullTransparentMesh: 1
+--- !u!1 &1512147655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1512147657}
+  - component: {fileID: 1512147656}
+  - component: {fileID: 1512147658}
+  m_Layer: 0
+  m_Name: A*
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1512147656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512147655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9ce969f5cae7942a439b7f5a825cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalPoint: {fileID: 372638506}
+  playerPoint: {fileID: 1399253918}
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 64
+  nodeRadius: 0.1
+--- !u!4 &1512147657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512147655}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1512147658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512147655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c75ce0871e7bfee46aec3c1c8b1b058d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1608288558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,8 +1091,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fbc1386193ffa4d84344089d08a205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 3
-  height: 3
+  width: 10
+  height: 5
   size: 1
   floorTransform: {fileID: 1693549921}
   finalObjectTransform: {fileID: 372638506}
@@ -1032,10 +1100,10 @@ MonoBehaviour:
     type: 3}
   wallsContainer: {fileID: 668036254}
   walls: []
-  tilePrefab: {fileID: 3875424729144203210, guid: 90bee552f4eb6084a9ada0c0c6929209,
+  nodePrefab: {fileID: 3875424729144203210, guid: 90bee552f4eb6084a9ada0c0c6929209,
     type: 3}
-  tilesContainer: {fileID: 17710609}
-  tiles: []
+  nodesContainer: {fileID: 17710609}
+  nodes: []
 --- !u!4 &1608288560
 Transform:
   m_ObjectHideFlags: 0
@@ -1051,7 +1119,7 @@ Transform:
   - {fileID: 668036254}
   - {fileID: 372638506}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1693549921 stripped
 Transform:
@@ -1154,7 +1222,7 @@ RectTransform:
   - {fileID: 1910887249}
   - {fileID: 1898136326}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1204,6 +1272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeRender: {fileID: 1608288559}
+  grid: {fileID: 1512147656}
   player: {fileID: 1399253912}
   currentState: 0
 --- !u!4 &1774070461
@@ -1588,7 +1657,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1758066150}
         m_TargetAssemblyTypeName: UIGameController, Assembly-CSharp
-        m_MethodName: CompleteGame
+        m_MethodName: ResetGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1648,6 +1717,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 3637296416363374544, guid: 5c26d53d0d393f044a773237e24a09ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3637296416363374546, guid: 5c26d53d0d393f044a773237e24a09ee,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3637296416363374546, guid: 5c26d53d0d393f044a773237e24a09ee,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1656,7 +1735,7 @@ PrefabInstance:
     - target: {fileID: 3637296416363374572, guid: 5c26d53d0d393f044a773237e24a09ee,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3637296416363374572, guid: 5c26d53d0d393f044a773237e24a09ee,
         type: 3}
@@ -1722,10 +1801,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7786489862629984281, guid: b1747824acdfdac4e940d984e5efa435,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7786489862629984287, guid: b1747824acdfdac4e940d984e5efa435,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7786489862629984287, guid: b1747824acdfdac4e940d984e5efa435,
         type: 3}

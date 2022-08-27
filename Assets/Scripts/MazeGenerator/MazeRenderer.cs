@@ -20,26 +20,29 @@ public class MazeRenderer : MonoBehaviour
     public Transform wallsContainer;
     public List<Transform> walls;
 
-    [Header("Tile")]
-    public PooleableObject tilePrefab;
-    public Transform tilesContainer;
-    public List<Transform> tiles;
+    [Header("Node")]
+    public PooleableObject nodePrefab;
+    public Transform nodesContainer;
+    public List<Transform> nodes;
 
     #region Generate Maze
     public void GenerateMaze()
     {
+        transform.position = Vector3.zero;
         RemoveMaze();
         var maze = MazeGenerator.Generate(width, height);
         DrawMaze(maze);
 
-        finalObjectTransform.position = tiles[tiles.Count - 1].position;
+        transform.position = new Vector3(size / 2, 0, size / 2); 
+
+        finalObjectTransform.position = nodes[nodes.Count - 1].position;
 
     }
 
     private void DrawMaze(WallState[,] maze)
     {
         walls.Clear();
-        tiles.Clear();
+        nodes.Clear();
 
         floorTransform.localScale = new Vector3(width/2 , 1, height/2);
 
@@ -50,11 +53,11 @@ public class MazeRenderer : MonoBehaviour
                 WallState tile = maze[i, j];
                 Vector3 position = new Vector3(-width / 2 + i, 0, -height / 2 + j);
 
-                Transform newTile = PoolManager.Instance.GetObject(tilePrefab.path).transform;
-                newTile.SetParent(tilesContainer);
+                Transform newTile = PoolManager.Instance.GetObject(nodePrefab.path).transform;
+                newTile.SetParent(nodesContainer);
                 newTile.name = "tile";
                 newTile.position = position;
-                tiles.Add(newTile);
+                nodes.Add(newTile);
 
                 if (tile.HasFlag(WallState.UP)) {
                     Transform topWall = PoolManager.Instance.GetObject(wallPrefab.path).transform;
@@ -107,8 +110,8 @@ public class MazeRenderer : MonoBehaviour
 
         }
 
-        tiles[0].name = "First tile";
-        tiles[tiles.Count-1].name = "Last tile";
+        nodes[0].name = "First tile";
+        nodes[nodes.Count-1].name = "Last tile";
 
     }
 
@@ -119,8 +122,8 @@ public class MazeRenderer : MonoBehaviour
         }
 
         //We doesnt need to remove the tiles because the position will be the same
-        for (int i = 0; i < tiles.Count; i++) {
-            PoolManager.Instance.ReleaseObject(tiles[i].gameObject);
+        for (int i = 0; i < nodes.Count; i++) {
+            PoolManager.Instance.ReleaseObject(nodes[i].gameObject);
         }
     }
 
@@ -129,7 +132,7 @@ public class MazeRenderer : MonoBehaviour
 
     public Vector3 GetStartPosition()
     {
-        return tiles[0].transform.position;
+        return nodes[0].transform.position;
     }
 
 
