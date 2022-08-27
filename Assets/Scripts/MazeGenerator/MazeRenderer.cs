@@ -9,6 +9,12 @@ public class MazeRenderer : MonoBehaviour
     [Range(1, 50)] public int height = 10;
     public float size = 1f;
 
+    [Header("Floor")]
+    public Transform floorTransform;
+
+    [Header("Final")]
+    public Transform finalObjectTransform;
+
     [Header("Wall")]
     public PooleableObject wallPrefab;
     public Transform wallsContainer;
@@ -18,17 +24,24 @@ public class MazeRenderer : MonoBehaviour
     public PooleableObject tilePrefab;
     public Transform tilesContainer;
     public List<Transform> tiles;
+
+    #region Generate Maze
     public void GenerateMaze()
     {
         RemoveMaze();
         var maze = MazeGenerator.Generate(width, height);
         DrawMaze(maze);
+
+        finalObjectTransform.position = tiles[tiles.Count - 1].position;
+
     }
 
     private void DrawMaze(WallState[,] maze)
     {
         walls.Clear();
         tiles.Clear();
+
+        floorTransform.localScale = new Vector3(width/2 , 1, height/2);
 
         for (int i = 0; i < width; i++) {
 
@@ -110,5 +123,14 @@ public class MazeRenderer : MonoBehaviour
             PoolManager.Instance.ReleaseObject(tiles[i].gameObject);
         }
     }
+
+    #endregion
+
+
+    public Vector3 GetStartPosition()
+    {
+        return tiles[0].transform.position;
+    }
+
 
 }
