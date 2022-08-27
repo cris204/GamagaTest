@@ -37,7 +37,6 @@ public class PoolManager : MonoBehaviour
             InstantiateObject(path);
         }
 
-        Debug.LogError(objectsPool[path].Count);
         return AllocateObject(path);
     }
 
