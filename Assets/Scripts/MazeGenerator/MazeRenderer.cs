@@ -18,23 +18,14 @@ public class MazeRenderer : MonoBehaviour
     public PooleableObject tilePrefab;
     public Transform tilesContainer;
     public List<Transform> tiles;
-
-    void Start()
+    public void GenerateMaze()
     {
+        RemoveMaze();
         var maze = MazeGenerator.Generate(width, height);
-        Draw(maze);
+        DrawMaze(maze);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            RemoveMaze();
-            var maze = MazeGenerator.Generate(width, height);
-            Draw(maze);
-        }
-    }
-
-    private void Draw(WallState[,] maze)
+    private void DrawMaze(WallState[,] maze)
     {
         walls.Clear();
         tiles.Clear();
@@ -48,6 +39,7 @@ public class MazeRenderer : MonoBehaviour
 
                 Transform newTile = PoolManager.Instance.GetObject(tilePrefab.path).transform;
                 newTile.SetParent(tilesContainer);
+                newTile.name = "tile";
                 newTile.position = position;
                 tiles.Add(newTile);
 
@@ -101,6 +93,10 @@ public class MazeRenderer : MonoBehaviour
             }
 
         }
+
+        tiles[0].name = "First tile";
+        tiles[tiles.Count-1].name = "Last tile";
+
     }
 
     private void RemoveMaze()
