@@ -18,6 +18,7 @@ public class UISettingsController : MonoBehaviour
 
     [Header("Volume")]
     public Slider volumeSlider;
+    private bool loadedSettings;
 
     private GameController gameController;
     private int width;
@@ -47,7 +48,10 @@ public class UISettingsController : MonoBehaviour
         maxHeightSlider.value = gameController.mazeRender.height;
         heightValueText.text = maxHeightSlider.value.ToString();
 
-        volumeSlider.value = mixerController.GetVolume();
+        if (!loadedSettings) {
+            volumeSlider.value = mixerController.GetVolume();
+            loadedSettings = true;
+        }
 
         gameObject.SetActive(true);
     }
