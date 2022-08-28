@@ -23,9 +23,10 @@ public class GameController : MonoBehaviour
 
     [Header("References")]
     public MazeRenderer mazeRender;
-    public Grid grid;
     public PlayerController player;
     public CameraSmoothFollow gameCamera;
+    public NewPathFinding pathFinding;
+    public LineRenderer pathLine;
 
     [Header("Config")]
     public GameState currentState;
@@ -45,7 +46,24 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_BACKGROUND_PATH, 0.4f,true);
+        if (pathFinding == null) {
+            pathFinding = new NewPathFinding();
+        }
         GenerateMaze();
+    }
+    
+    List<NodeData> path = new List<NodeData>();
+
+    private void Update()
+    {
+        if (NeedToShowPath()) {
+            if (path == null) return;
+            pathLine.positionCount = path.Count;
+            for (int i = 0; i < path.Count; i++) {
+
+                pathLine.SetPosition(i, path[i].nodePosition.position);
+            }
+        }
     }
 
     public void RestartGame()
@@ -60,12 +78,10 @@ public class GameController : MonoBehaviour
         mazeRender.GenerateMaze();
         player.transform.position = mazeRender.GetStartPosition();
         gameCamera.MoveInstant();
-        grid.SetGridSize(mazeRender.width * (int)mazeRender.spaceSize * 2, mazeRender.height * (int)mazeRender.spaceSize * 2);
-        grid.pathLine.gameObject.SetActive(false);
         currentState = GameState.Playing;
         generatedPath = false;
 
-        Vector3 minPos = mazeRender.nodes[0].position;
+        Vector3 minPos = mazeRender.nodesTranform[0].position;
         Vector3 maxPos = mazeRender.finalObjectTransform.position;
 
         gameCamera.SetUpCamera(minPos.x / 2, maxPos.x / 1.2f, minPos.z / 2, maxPos.z / 1.2f);
@@ -80,16 +96,18 @@ public class GameController : MonoBehaviour
                 CreateAstarPath();
             }
 
-            grid.pathLine.gameObject.SetActive(true);
+            path.Clear();
+            path = pathFinding.FindPath(0, 0, mazeRender.width - 1, mazeRender.height - 1);
+
+            pathLine.gameObject.SetActive(true);
         } else {
 
-            grid.pathLine.gameObject.SetActive(false);
+            pathLine.gameObject.SetActive(false);
         }
     }
 
     public void CreateAstarPath()
     {
-        grid.GeneratePath();
         generatedPath = true;
     }
 

@@ -31,7 +31,7 @@ public struct Neighbour
 public static class MazeGenerator
 {
 
-    private static WallState GetOppositeWall(WallState wall)
+    public static WallState GetOppositeWall(WallState wall)
     {
         switch (wall) {
             case WallState.RIGHT: return WallState.LEFT;
@@ -65,6 +65,7 @@ public static class MazeGenerator
 
                 Position nPosition = randomNeighbour.position;
                 maze[current.x, current.y] &= ~randomNeighbour.shareWall;
+
                 maze[nPosition.x, nPosition.y] &= ~GetOppositeWall(randomNeighbour.shareWall);
                 maze[nPosition.x, nPosition.y] |= WallState.VISITED;
 
@@ -143,16 +144,30 @@ public static class MazeGenerator
         return neighbourList;
     }
 
+    public static NodeData[,] nodesData;
 
     public static WallState[,] Generate(int width, int height)
     {
         WallState[,] maze = new WallState[width, height];
         WallState initialState = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
 
+        nodesData = new NodeData[width, height];
+
         for (int i = 0; i < width; ++i) { //Cambiar por i++
             
             for (int j = 0; j < height; j++) {
                 maze[i, j] = initialState; //1111
+                nodesData[i, j] = new NodeData(); //1111
+                nodesData[i, j].Index = new Vector2(i, j);
+
+                if(j > 0) {
+                    nodesData[i, j].AddNeighbour(nodesData[i, j - 1], WallState.DOWN);
+                }
+
+                if (i > 0) {
+                    nodesData[i, j].AddNeighbour(nodesData[i - 1, j], WallState.LEFT);
+                }
+
             }
 
         }
