@@ -165,4 +165,21 @@ public class MazeRenderer : MonoBehaviour
         }
         return null;
     }
+
+    public NodeData GetNearNodeByDistance(Vector3 position)
+    {
+        float minDistance = Vector3.Distance(position, nodesData[0].nodePosition.position);
+        NodeData nearNode = nodesData[0];
+
+        for (int i = 1; i < nodesData.Count; i++) {
+
+            float distance = Vector3.Distance(position, nodesData[i].nodePosition.position);
+            if (minDistance > distance) {
+                minDistance = distance;
+                nearNode = nodesData[i];
+            }
+        }
+
+        return nearNode;
+    }
 }

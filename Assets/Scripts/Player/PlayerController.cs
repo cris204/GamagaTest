@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     //public Animator playerAnim;
     public float speed = 200;
     public float rotationSpeed = 300;
+    public NodeData currentNode;
     private float horizontal;
     private float vertical;
     private Vector3 inputDirection;
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
         if (this.rb.velocity.magnitude != 0) {
            // set movement animation
-        } 
+        }
 
     }
 #endregion

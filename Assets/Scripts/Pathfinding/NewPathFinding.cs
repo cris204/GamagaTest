@@ -14,7 +14,7 @@ public class NewPathFinding
         openList.Clear();
         closeList.Clear();
 
-        NodeData startNode = GameController.Instance.mazeRender.GetNodeInPosition(0, 0);
+        NodeData startNode = GameController.Instance.mazeRender.GetNodeInPosition(startX, startY);
         NodeData endNode = GameController.Instance.mazeRender.GetNodeInPosition(endX, endY);
 
         openList.Add(startNode);

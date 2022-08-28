@@ -57,10 +57,14 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         if (NeedToShowPath()) {
+
+            player.currentNode = mazeRender.GetNearNodeByDistance(player.transform.position);
+            path.Clear();
+            path = pathFinding.FindPath((int)player.currentNode.Index.x, (int)player.currentNode.Index.y, mazeRender.width - 1, mazeRender.height - 1);
+
             if (path == null) return;
             pathLine.positionCount = path.Count;
             for (int i = 0; i < path.Count; i++) {
-
                 pathLine.SetPosition(i, path[i].nodePosition.position);
             }
         }
@@ -73,6 +77,7 @@ public class GameController : MonoBehaviour
 
     public void GenerateMaze()
     {
+        pathLine.gameObject.SetActive(false);
         showingPath = false;
         currentState = GameState.Waiting;
         mazeRender.GenerateMaze();
@@ -96,8 +101,6 @@ public class GameController : MonoBehaviour
                 CreateAstarPath();
             }
 
-            path.Clear();
-            path = pathFinding.FindPath(0, 0, mazeRender.width - 1, mazeRender.height - 1);
 
             pathLine.gameObject.SetActive(true);
         } else {
