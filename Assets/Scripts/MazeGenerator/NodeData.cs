@@ -28,22 +28,10 @@ public class NodeData
         }
 
     }
-
-    public string LeftNode;
-    public string DownNode;
-    public string RightNode;
-    public string UpNode;
     
     public NodeData cameFromNode;
-    public void UpdateNeighbors() {
-        LeftNode = neighboursDictionary[WallState.LEFT] != null ? neighboursDictionary[WallState.LEFT].Name : "";
-        DownNode = neighboursDictionary[WallState.DOWN] != null ? neighboursDictionary[WallState.DOWN].Name : "";
-        RightNode = neighboursDictionary[WallState.RIGHT] != null ? neighboursDictionary[WallState.RIGHT].Name : "";
-        UpNode = neighboursDictionary[WallState.UP] != null ? neighboursDictionary[WallState.UP].Name : "";
-        GetNeighbours();
-    }
 
-    public List<NodeData> GetNeighbours() {
+    public List<NodeData> GetNeighbours(bool includeMe = false) {
          
         List<NodeData> neighboursList = new List<NodeData>();
 
@@ -53,15 +41,15 @@ public class NodeData
                 neighboursList.Add(node);
             }
         }
+        if (includeMe) {
+            neighboursList.Add(this);
+        }
         return neighboursList;
     }
 
     public void AddNeighbour(NodeData node, WallState side) {
         neighboursDictionary[side] = node;
         node.neighboursDictionary[MazeGenerator.GetOppositeWall(side)] = this;
-
-        UpdateNeighbors();
-        node.UpdateNeighbors();
     }
 
     public void RemoveNeighbour(WallState side) {
@@ -69,8 +57,6 @@ public class NodeData
         if (node == null)
             return;
         node.neighboursDictionary[MazeGenerator.GetOppositeWall(side)] = null;
-        node.UpdateNeighbors();
         neighboursDictionary[side] = null;
-        UpdateNeighbors();
     }
 }

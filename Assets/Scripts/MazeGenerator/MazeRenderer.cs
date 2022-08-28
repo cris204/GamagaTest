@@ -124,12 +124,6 @@ public class MazeRenderer : MonoBehaviour
                 }
                 MazeGenerator.nodesData[i, j].Name = (nodesTranform.Count-1).ToString();
                 MazeGenerator.nodesData[i, j].nodePosition = nodesTranform[nodesTranform.Count - 1];
-                if (j > 0) {
-                    MazeGenerator.nodesData[i, j - 1].UpdateNeighbors();
-                }
-                if (i > 0) {
-                    MazeGenerator.nodesData[i - 1, j].UpdateNeighbors();
-                }
             }
 
         }
@@ -157,11 +151,9 @@ public class MazeRenderer : MonoBehaviour
     public NodeData GetNodeInPosition(int x, int y)
     {
         for (int i = 0; i < nodesData.Count; i++) {
-
             if(nodesData[i].Index.x == x && nodesData[i].Index.y == y) {
                 return nodesData[i];
             }
-
         }
         return null;
     }
@@ -177,6 +169,23 @@ public class MazeRenderer : MonoBehaviour
             if (minDistance > distance) {
                 minDistance = distance;
                 nearNode = nodesData[i];
+            }
+        }
+
+        return nearNode;
+    }
+
+    public NodeData GetNearNodeByDistance(Vector3 position, List<NodeData> nodes)
+    {
+        float minDistance = Vector3.Distance(position, nodes[0].nodePosition.position);
+        NodeData nearNode = nodes[0];
+
+        for (int i = 1; i < nodes.Count; i++) {
+
+            float distance = Vector3.Distance(position, nodes[i].nodePosition.position);
+            if (minDistance > distance) {
+                minDistance = distance;
+                nearNode = nodes[i];
             }
         }
 

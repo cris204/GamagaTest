@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     public GameState currentState;
 
     public bool generatedPath;
+    internal bool needToGenerate;
     internal bool showingPath;
 
     private void Awake()
@@ -58,14 +59,19 @@ public class GameController : MonoBehaviour
     {
         if (NeedToShowPath()) {
 
-            player.currentNode = mazeRender.GetNearNodeByDistance(player.transform.position);
-            path.Clear();
-            path = pathFinding.FindPath((int)player.currentNode.Index.x, (int)player.currentNode.Index.y, mazeRender.width - 1, mazeRender.height - 1);
+            if (player.rb.velocity.magnitude > 0.1f || needToGenerate) {
+                
+                player.currentNode = mazeRender.GetNearNodeByDistance(player.transform.position, player.currentNode.GetNeighbours(true));
+                path.Clear();
+                path = pathFinding.FindPath((int)player.currentNode.Index.x, (int)player.currentNode.Index.y, mazeRender.width - 1, mazeRender.height - 1);
 
-            if (path == null) return;
-            pathLine.positionCount = path.Count;
-            for (int i = 0; i < path.Count; i++) {
-                pathLine.SetPosition(i, path[i].nodePosition.position);
+                if (path == null) return;
+                pathLine.positionCount = path.Count;
+                pathLine.SetPosition(0, player.transform.position);
+                for (int i = 1; i < path.Count; i++) {
+                    pathLine.SetPosition(i, path[i].nodePosition.position);
+                }
+                needToGenerate = false;
             }
         }
     }
@@ -90,7 +96,7 @@ public class GameController : MonoBehaviour
         Vector3 maxPos = mazeRender.finalObjectTransform.position;
 
         gameCamera.SetUpCamera(minPos.x / 2, maxPos.x / 1.2f, minPos.z / 2, maxPos.z / 1.2f);
-
+        player.currentNode = mazeRender.GetNodeInPosition(0, 0);
     }
 
     public void ToggleAstarPath()
@@ -101,7 +107,7 @@ public class GameController : MonoBehaviour
                 CreateAstarPath();
             }
 
-
+            needToGenerate = true;
             pathLine.gameObject.SetActive(true);
         } else {
 
