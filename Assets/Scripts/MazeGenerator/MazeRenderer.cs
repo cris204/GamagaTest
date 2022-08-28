@@ -5,9 +5,12 @@ using UnityEngine;
 public class MazeRenderer : MonoBehaviour
 {
     [Header("Maze config")]
-    [Range(1, 20)] public int width = 10;
-    [Range(1, 20)] public int height = 10;
-    public float size = 1f;
+    [Range(2, 20)] public int width = 10;
+    [Range(2, 20)] public int height = 10;
+    public int minMazeSize = 2;
+    public int maxMazeSize = 20;
+
+    public float spaceSize = 1f;
 
     [Header("Final")]
     public Transform finalObjectTransform;
@@ -48,7 +51,7 @@ public class MazeRenderer : MonoBehaviour
             for (int j = 0; j < height; j++) {
 
                 WallState tile = maze[i, j];
-                position = new Vector3((transform.position.x + (-width / 2) + i * size), 0, transform.position.z + (-height / 2) + j * size);
+                position = new Vector3((transform.position.x + (-width / 2) + i * spaceSize), 0, transform.position.z + (-height / 2) + j * spaceSize);
 
                 Transform newTile = PoolManager.Instance.GetObject(nodePrefab.path).transform;
                 newTile.SetParent(nodesContainer);
@@ -60,10 +63,10 @@ public class MazeRenderer : MonoBehaviour
                     Transform topWall = PoolManager.Instance.GetObject(wallPrefab.path).transform;
                     topWall.SetParent(wallsContainer);
                     positionOffset = Vector3.zero;
-                    positionOffset.z = size / 2;
+                    positionOffset.z = spaceSize / 2;
                     topWall.position = position + positionOffset;
                     wallScale = topWall.localScale;
-                    wallScale.x = size;
+                    wallScale.x = spaceSize;
                     topWall.localScale = wallScale;
                     topWall.eulerAngles = Vector3.zero;
 
@@ -74,10 +77,10 @@ public class MazeRenderer : MonoBehaviour
                     Transform leftWall = PoolManager.Instance.GetObject(wallPrefab.path).transform;
                     leftWall.SetParent(wallsContainer);
                     positionOffset = Vector3.zero;
-                    positionOffset.x = -size / 2;
+                    positionOffset.x = -spaceSize / 2;
                     leftWall.position = position + positionOffset;
                     wallScale = leftWall.localScale;
-                    wallScale.x = size;
+                    wallScale.x = spaceSize;
                     leftWall.localScale = wallScale;
                     leftWall.eulerAngles = Vector3.up * 90;
                     
@@ -90,10 +93,10 @@ public class MazeRenderer : MonoBehaviour
                         Transform rightWall = PoolManager.Instance.GetObject(wallPrefab.path).transform;
                         rightWall.SetParent(wallsContainer);
                         positionOffset = Vector3.zero;
-                        positionOffset.x = size / 2;
+                        positionOffset.x = spaceSize / 2;
                         rightWall.position = position + positionOffset;
                         wallScale = rightWall.localScale;
-                        wallScale.x = size;
+                        wallScale.x = spaceSize;
                         rightWall.localScale = wallScale;
                         rightWall.eulerAngles = Vector3.up * 90;
 
@@ -108,10 +111,10 @@ public class MazeRenderer : MonoBehaviour
                         Transform downWall = PoolManager.Instance.GetObject(wallPrefab.path).transform;
                         downWall.SetParent(wallsContainer);
                         positionOffset = Vector3.zero;
-                        positionOffset.z = -size / 2;
+                        positionOffset.z = -spaceSize / 2;
                         downWall.position = position + positionOffset;
                         wallScale = downWall.localScale;
-                        wallScale.x = size;
+                        wallScale.x = spaceSize;
                         downWall.localScale = wallScale;
                         downWall.eulerAngles = Vector3.zero;
 

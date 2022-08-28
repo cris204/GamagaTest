@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
         mazeRender.GenerateMaze();
         player.transform.position = mazeRender.GetStartPosition();
         gameCamera.MoveInstant();
-        grid.SetGridSize(mazeRender.width * (int)mazeRender.size * 2, mazeRender.height * (int)mazeRender.size * 2);
+        grid.SetGridSize(mazeRender.width * (int)mazeRender.spaceSize * 2, mazeRender.height * (int)mazeRender.spaceSize * 2);
         grid.pathLine.gameObject.SetActive(false);
         currentState = GameState.Playing;
         generatedPath = false;
@@ -95,6 +95,17 @@ public class GameController : MonoBehaviour
     public bool NeedToShowPath()
     {
         return generatedPath && showingPath && currentState == GameState.Playing;
+    }
+
+    public void ChangeMazeSize(int width, int height)
+    {
+
+        if (width != -1) {
+            mazeRender.width = width;
+        }
+        if (height != -1) {
+            mazeRender.height = height;
+        }
     }
 
 }
