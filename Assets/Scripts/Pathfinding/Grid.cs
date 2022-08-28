@@ -4,23 +4,46 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public Transform finalPoint;
-    public Transform playerPoint;
+    public LineRenderer pathLine;
+    public List<Node> path;
+
 
     public LayerMask unwalkableMask;
     public float nodeRadius;
     private Vector3 gridWorldSize;
     private Node[,] grid;
+    private GameController gameController;
 
-    float nodeDiameter;
-    int gridSizeX;
-    int gridSizeY;
+    private Transform playerPoint;
+    private Transform finalPoint;
+
+    private float nodeDiameter;
+    private int gridSizeX;
+    private int gridSizeY;
 
     public bool onlyDisplayPathGizmos;
     public int MaxSize {
         get
         {
             return gridSizeX * gridSizeY;
+        }
+    }
+    private void Start()
+    {
+        gameController = GameController.Instance;
+        playerPoint = gameController.player.transform;
+        finalPoint = gameController.mazeRender.finalObjectTransform;
+    }
+
+    private void Update()
+    {
+        if (gameController.NeedToShowPath()) {
+            if (path == null) return;
+            pathLine.positionCount = path.Count;
+            for (int i = 0; i < path.Count; i++) {
+
+                pathLine.SetPosition(i, path[i].worldPosition);
+            }
         }
     }
 
@@ -30,6 +53,7 @@ public class Grid : MonoBehaviour
         gridWorldSize.x = x;
         gridWorldSize.z = z;
     }
+
 
     public void GeneratePath()
     {
@@ -89,7 +113,7 @@ public class Grid : MonoBehaviour
         return grid[x, y];
     }
 
-    public List<Node> path;
+
 
     private void OnDrawGizmos()
     {

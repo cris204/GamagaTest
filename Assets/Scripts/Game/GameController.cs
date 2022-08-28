@@ -21,10 +21,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+    [Header("Config")]
     public MazeRenderer mazeRender;
     public Grid grid;
     public GameObject player;
     public GameState currentState;
+
+    internal bool generatedPath;
+    internal bool showingPath;
 
     private void Awake()
     {
@@ -48,24 +52,45 @@ public class GameController : MonoBehaviour
 
     public void GenerateMaze()
     {
+        showingPath = false;
         currentState = GameState.Waiting;
         mazeRender.GenerateMaze();
         player.transform.position = mazeRender.GetStartPosition();
-        currentState = GameState.Playing;
         grid.SetGridSize(mazeRender.width, mazeRender.height);
-        StartCoroutine(WaitToCreatePath());
+        grid.pathLine.gameObject.SetActive(false);
+        currentState = GameState.Playing;
+        generatedPath = false;
     }
 
-    IEnumerator WaitToCreatePath()
+    public void ToggleAstarPath()
     {
-        yield return new WaitForSeconds(0.25f);
+        showingPath = !showingPath;
+        if (showingPath) {
+            if (!generatedPath) {
+                CreateAstarPath();
+            }
+
+            grid.pathLine.gameObject.SetActive(true);
+        } else {
+
+            grid.pathLine.gameObject.SetActive(false);
+        }
+    }
+
+    public void CreateAstarPath()
+    {
         grid.GeneratePath();
+        generatedPath = true;
     }
 
     public void CompleteMaze()
     {
         UIGameController.Instance.CompleteGame();
         currentState = GameState.End;
+    }
+    public bool NeedToShowPath()
+    {
+        return generatedPath && showingPath && currentState == GameState.Playing;
     }
 
 }

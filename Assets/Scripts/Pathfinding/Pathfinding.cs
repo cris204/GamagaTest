@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
-
-    Grid grid;
+    private Grid grid;
+    private GameController gameController;
+    private Transform playerPoint;
+    private Transform finalPoint;
 
     private void Awake()
     {
         grid = GetComponent<Grid>();
     }
 
+    private void Start()
+    {
+        gameController = GameController.Instance;
+        playerPoint = gameController.player.transform;
+        finalPoint = gameController.mazeRender.finalObjectTransform;
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) {
-            FindPath(grid.playerPoint.position, grid.finalPoint.position);
+        if (gameController.NeedToShowPath()) {
+            FindPath(playerPoint.position, finalPoint.position);
         }
     }
 

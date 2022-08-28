@@ -34,11 +34,21 @@ public class UIGameController : MonoBehaviour
         ReGenerateMaze();
     }
 
+    #region Called By Button Event
+
+    //Called By Button Event;
+    public void ShowPath()
+    {
+        GameController.Instance.ToggleAstarPath();
+    }
+
+
     //Called By Button Event;
     public void ReGenerateMaze()
     {
         
         GameController.Instance.RestartGame();
     }
+    #endregion
 
 }
