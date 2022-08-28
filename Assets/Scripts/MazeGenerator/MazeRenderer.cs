@@ -16,12 +16,10 @@ public class MazeRenderer : MonoBehaviour
     public Transform finalObjectTransform;
 
     [Header("Wall")]
-    public PooleableObject wallPrefab;
     public Transform wallsContainer;
     public List<Transform> walls;
 
     [Header("Node")]
-    public PooleableObject nodePrefab;
     public Transform nodesContainer;
     public List<Transform> nodes;
 
@@ -53,14 +51,14 @@ public class MazeRenderer : MonoBehaviour
                 WallState tile = maze[i, j];
                 position = new Vector3((transform.position.x + (-width / 2) + i * spaceSize), 0, transform.position.z + (-height / 2) + j * spaceSize);
 
-                Transform newTile = PoolManager.Instance.GetObject(nodePrefab.path).transform;
+                Transform newTile = PoolManager.Instance.GetObject(Env.MAZE_NODE_PATH).transform;
                 newTile.SetParent(nodesContainer);
                 newTile.position = position;
                 newTile.name = nodes.Count.ToString();
                 nodes.Add(newTile);
 
                 if (tile.HasFlag(WallState.UP)) {
-                    Transform topWall = PoolManager.Instance.GetObject(wallPrefab.path).transform;
+                    Transform topWall = PoolManager.Instance.GetObject(Env.MAZE_WALL_PATH).transform;
                     topWall.SetParent(wallsContainer);
                     positionOffset = Vector3.zero;
                     positionOffset.z = spaceSize / 2;
@@ -74,7 +72,7 @@ public class MazeRenderer : MonoBehaviour
                 }
 
                 if (tile.HasFlag(WallState.LEFT)) {
-                    Transform leftWall = PoolManager.Instance.GetObject(wallPrefab.path).transform;
+                    Transform leftWall = PoolManager.Instance.GetObject(Env.MAZE_WALL_PATH).transform;
                     leftWall.SetParent(wallsContainer);
                     positionOffset = Vector3.zero;
                     positionOffset.x = -spaceSize / 2;
@@ -90,7 +88,7 @@ public class MazeRenderer : MonoBehaviour
                 if (i == (width - 1)) {
 
                     if (tile.HasFlag(WallState.RIGHT)) {
-                        Transform rightWall = PoolManager.Instance.GetObject(wallPrefab.path).transform;
+                        Transform rightWall = PoolManager.Instance.GetObject(Env.MAZE_WALL_PATH).transform;
                         rightWall.SetParent(wallsContainer);
                         positionOffset = Vector3.zero;
                         positionOffset.x = spaceSize / 2;
@@ -108,7 +106,7 @@ public class MazeRenderer : MonoBehaviour
                 if (j == 0) {
 
                     if (tile.HasFlag(WallState.DOWN)) {
-                        Transform downWall = PoolManager.Instance.GetObject(wallPrefab.path).transform;
+                        Transform downWall = PoolManager.Instance.GetObject(Env.MAZE_WALL_PATH).transform;
                         downWall.SetParent(wallsContainer);
                         positionOffset = Vector3.zero;
                         positionOffset.z = -spaceSize / 2;

@@ -44,8 +44,8 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_BACKGROUND_PATH, 0.4f,true);
         GenerateMaze();
-
     }
 
     public void RestartGame()

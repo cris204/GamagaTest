@@ -6,6 +6,8 @@ using TMPro;
 
 public class UISettingsController : MonoBehaviour
 {
+    public MixerController mixerController;
+
     [Header("Width")]
     public Slider maxWidthSlider;
     public TextMeshProUGUI widthValueText;
@@ -13,6 +15,9 @@ public class UISettingsController : MonoBehaviour
     [Header("Height")]
     public Slider maxHeightSlider;
     public TextMeshProUGUI heightValueText;
+
+    [Header("Volume")]
+    public Slider volumeSlider;
 
     private GameController gameController;
     private int width;
@@ -25,8 +30,9 @@ public class UISettingsController : MonoBehaviour
 
     #region Called By Button Event
     public void Open()
-    { 
-        if(gameController == null) {
+    {
+        PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_BUTTON_PATH, 0.5f);
+        if (gameController == null) {
             gameController = GameController.Instance;
         }
 
@@ -41,11 +47,14 @@ public class UISettingsController : MonoBehaviour
         maxHeightSlider.value = gameController.mazeRender.height;
         heightValueText.text = maxHeightSlider.value.ToString();
 
+        volumeSlider.value = mixerController.GetVolume();
+
         gameObject.SetActive(true);
     }
 
     public void Close()
     {
+        PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_BUTTON_PATH, 0.5f);
         gameObject.SetActive(false);
     }
 
@@ -66,5 +75,10 @@ public class UISettingsController : MonoBehaviour
         height = (int)value;
         heightValueText.text = height.ToString();
     }
+    public void ChangeVolumeSlider(float value)
+    {
+        mixerController.SetVolume(value);
+    }
+
     #endregion
 }
