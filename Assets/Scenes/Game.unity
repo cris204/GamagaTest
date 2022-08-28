@@ -1036,6 +1036,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   nodeRadius: 0.1
+  onlyDisplayPathGizmos: 0
 --- !u!4 &1512147657
 Transform:
   m_ObjectHideFlags: 0
@@ -1091,8 +1092,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fbc1386193ffa4d84344089d08a205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10
-  height: 5
+  width: 20
+  height: 20
   size: 1
   floorTransform: {fileID: 1693549921}
   finalObjectTransform: {fileID: 372638506}
