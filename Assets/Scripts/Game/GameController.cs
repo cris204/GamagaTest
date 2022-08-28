@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour
         Vector3 minPos = mazeRender.nodes[0].position;
         Vector3 maxPos = mazeRender.finalObjectTransform.position;
 
-        gameCamera.SetUpCamera(minPos.x / 2, maxPos.x, minPos.z / 2, maxPos.z);
+        gameCamera.SetUpCamera(minPos.x / 2, maxPos.x / 1.2f, minPos.z / 2, maxPos.z / 1.2f);
 
     }
 
