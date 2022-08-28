@@ -832,6 +832,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -904,6 +905,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4a02749be37424c80fee79151b955d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1399253918}
+  offset: {x: 0, y: 10, z: 0}
+  damping: 0.5
 --- !u!1 &975369761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,6 +1143,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c2aa4197a186046bb533f0eafe37d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1399253918 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7786489862629984287, guid: b1747824acdfdac4e940d984e5efa435,
+    type: 3}
+  m_PrefabInstance: {fileID: 7786489863990895489}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1436888314
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,7 +1319,7 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 64
-  nodeRadius: 0.1
+  nodeRadius: 0.25
   onlyDisplayPathGizmos: 0
 --- !u!4 &1512147657
 Transform:
@@ -1665,7 +1687,9 @@ MonoBehaviour:
   mazeRender: {fileID: 1608288559}
   grid: {fileID: 1512147656}
   player: {fileID: 1399253915}
+  gameCamera: {fileID: 963194229}
   currentState: 0
+  generatedPath: 0
 --- !u!4 &1774070461
 Transform:
   m_ObjectHideFlags: 0

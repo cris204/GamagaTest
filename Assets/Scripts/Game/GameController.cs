@@ -21,13 +21,16 @@ public class GameController : MonoBehaviour
         }
     }
 
-    [Header("Config")]
+    [Header("References")]
     public MazeRenderer mazeRender;
     public Grid grid;
     public PlayerController player;
+    public CameraSmoothFollow gameCamera;
+
+    [Header("Config")]
     public GameState currentState;
 
-    internal bool generatedPath;
+    public bool generatedPath;
     internal bool showingPath;
 
     private void Awake()
@@ -56,6 +59,7 @@ public class GameController : MonoBehaviour
         currentState = GameState.Waiting;
         mazeRender.GenerateMaze();
         player.transform.position = mazeRender.GetStartPosition();
+        gameCamera.MoveInstant();
         grid.SetGridSize(mazeRender.width * (int)mazeRender.size * 2, mazeRender.height * (int)mazeRender.size * 2);
         grid.pathLine.gameObject.SetActive(false);
         currentState = GameState.Playing;

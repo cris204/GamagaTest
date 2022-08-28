@@ -31,6 +31,9 @@ public class Pathfinding : MonoBehaviour
     private void FindPath(Vector3 startPosition, Vector3 targetPosition)
     {
         Node startNode = grid.GetNodeFromWorldPoint(startPosition);
+
+        if (!startNode.walkable) return;
+
         Node finalNode = grid.GetNodeFromWorldPoint(targetPosition);
 
         Heap<Node> openSet = new Heap<Node>(grid.MaxSize);

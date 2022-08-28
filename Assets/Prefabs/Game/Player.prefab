@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 7786489862629984281}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5466483, y: 0, z: -0.04456354}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 7786489863512743208}
   m_Father: {fileID: 0}
@@ -127,8 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c2aa4197a186046bb533f0eafe37d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualJoystick: {fileID: 0}
   rb: {fileID: 7786489862629984280}
   speed: 200
+  rotationSpeed: 300
 --- !u!136 &7786489862629984282
 CapsuleCollider:
   m_ObjectHideFlags: 0
