@@ -64,6 +64,12 @@ public class GameController : MonoBehaviour
         grid.pathLine.gameObject.SetActive(false);
         currentState = GameState.Playing;
         generatedPath = false;
+
+        Vector3 minPos = mazeRender.nodes[0].position;
+        Vector3 maxPos = mazeRender.finalObjectTransform.position;
+
+        gameCamera.SetUpCamera(minPos.x / 2, maxPos.x, minPos.z / 2, maxPos.z);
+
     }
 
     public void ToggleAstarPath()
