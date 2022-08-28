@@ -61,9 +61,9 @@ public class GameController : MonoBehaviour
 
             if (player.rb.velocity.magnitude > 0.1f || needToGenerate) {
                 
-                player.currentNode = mazeRender.GetNearNodeByDistance(player.transform.position, player.currentNode.GetNeighbours(true));
                 path.Clear();
                 path = pathFinding.FindPath((int)player.currentNode.Index.x, (int)player.currentNode.Index.y, mazeRender.width - 1, mazeRender.height - 1);
+                player.currentNode = mazeRender.GetNearNodeByDistance(player.transform.position, player.currentNode.GetNeighbours(true));
 
                 if (path == null) return;
                 pathLine.positionCount = path.Count;
@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour
             if (!generatedPath) {
                 CreateAstarPath();
             }
-
+            player.currentNode = mazeRender.GetNearNodeByDistance(player.transform.position);
             needToGenerate = true;
             pathLine.gameObject.SetActive(true);
         } else {
