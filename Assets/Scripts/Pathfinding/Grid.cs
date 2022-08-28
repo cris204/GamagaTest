@@ -102,8 +102,8 @@ public class Grid : MonoBehaviour
 
     public Node GetNodeFromWorldPoint(Vector3 worldPosition)
     {
-        float percentX = (worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x;
-        float percentY = (worldPosition.z + gridWorldSize.z / 2) / gridWorldSize.z;
+        float percentX = transform.position.x + (worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x;
+        float percentY = transform.position.z + (worldPosition.z + gridWorldSize.z / 2) / gridWorldSize.z;
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
 

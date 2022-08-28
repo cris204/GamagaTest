@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour
     [Header("Config")]
     public MazeRenderer mazeRender;
     public Grid grid;
-    public GameObject player;
+    public PlayerController player;
     public GameState currentState;
 
     internal bool generatedPath;
@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour
         currentState = GameState.Waiting;
         mazeRender.GenerateMaze();
         player.transform.position = mazeRender.GetStartPosition();
-        grid.SetGridSize(mazeRender.width, mazeRender.height);
+        grid.SetGridSize(mazeRender.width * (int)mazeRender.size * 2, mazeRender.height * (int)mazeRender.size * 2);
         grid.pathLine.gameObject.SetActive(false);
         currentState = GameState.Playing;
         generatedPath = false;

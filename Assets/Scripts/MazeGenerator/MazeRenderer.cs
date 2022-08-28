@@ -5,12 +5,9 @@ using UnityEngine;
 public class MazeRenderer : MonoBehaviour
 {
     [Header("Maze config")]
-    [Range(1, 50)] public int width = 10;
-    [Range(1, 50)] public int height = 10;
+    [Range(1, 20)] public int width = 10;
+    [Range(1, 20)] public int height = 10;
     public float size = 1f;
-
-    [Header("Floor")]
-    public Transform floorTransform;
 
     [Header("Final")]
     public Transform finalObjectTransform;
@@ -33,8 +30,6 @@ public class MazeRenderer : MonoBehaviour
         var maze = MazeGenerator.Generate(width, height);
         DrawMaze(maze);
 
-        transform.position = new Vector3(size / 2, 0, size / 2); 
-
         finalObjectTransform.position = nodes[nodes.Count - 1].position;
 
     }
@@ -43,8 +38,6 @@ public class MazeRenderer : MonoBehaviour
     {
         walls.Clear();
         nodes.Clear();
-
-        floorTransform.localScale = new Vector3(width/2 , 1, height/2);
 
         Vector3 position;
         Vector3 positionOffset;
@@ -55,11 +48,12 @@ public class MazeRenderer : MonoBehaviour
             for (int j = 0; j < height; j++) {
 
                 WallState tile = maze[i, j];
-                position = new Vector3(-width / 2 + i, 0, -height / 2 + j);
+                position = new Vector3((transform.position.x + (-width / 2) + i * size), 0, transform.position.z + (-height / 2) + j * size);
 
                 Transform newTile = PoolManager.Instance.GetObject(nodePrefab.path).transform;
                 newTile.SetParent(nodesContainer);
                 newTile.position = position;
+                newTile.name = nodes.Count.ToString();
                 nodes.Add(newTile);
 
                 if (tile.HasFlag(WallState.UP)) {
