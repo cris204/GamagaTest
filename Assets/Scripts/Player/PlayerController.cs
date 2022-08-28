@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public VirtualJoystick virtualJoystick;
     public Rigidbody rb;
     //public Animator playerAnim;
     public float speed = 200;
@@ -28,8 +29,16 @@ public class PlayerController : MonoBehaviour
     #region Movement
     private void Movement()
     {
+
+
+#if UNITY_ANDROID || UNITY_IPHONE
+        horizontal = virtualJoystick.inputDir.x;
+        vertical = virtualJoystick.inputDir.y;
+#else
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
+#endif
+
         inputDirection = new Vector3(horizontal, 0, vertical).normalized;
         rb.velocity = inputDirection * speed * Time.fixedDeltaTime;
 
@@ -44,9 +53,9 @@ public class PlayerController : MonoBehaviour
         } 
 
     }
-    #endregion
+#endregion
 
-    #region Collision
+#region Collision
 
     public void OnTriggerEnter(Collider other)
     {
@@ -55,6 +64,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    #endregion
+#endregion
 
 }
