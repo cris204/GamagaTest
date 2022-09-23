@@ -2,27 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewPathFinding 
+public class PathFinding 
 {
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
 
     private List<NodeData> openList = new List<NodeData>();
     private List<NodeData> closeList = new List<NodeData>();
+
+    private MazeRenderer mazeRender;
+
     public List<NodeData> FindPath(int startX, int startY, int endX, int endY)
     {
         openList.Clear();
         closeList.Clear();
 
-        NodeData startNode = GameController.Instance.mazeRender.GetNodeInPosition(startX, startY);
-        NodeData endNode = GameController.Instance.mazeRender.GetNodeInPosition(endX, endY);
+        if (mazeRender == null) {
+            mazeRender = GameController.Instance.mazeRender;
+        }
+
+        NodeData startNode = mazeRender.GetNodeInPosition(startX, startY);
+        NodeData endNode = mazeRender.GetNodeInPosition(endX, endY);
 
         openList.Add(startNode);
 
-
-        for (int x = 0; x < GameController.Instance.mazeRender.width; x++) {
-            for (int y = 0; y < GameController.Instance.mazeRender.height; y++) {
-                NodeData nodeData = GameController.Instance.mazeRender.GetNodeInPosition(x, y);
+        for (int x = 0; x < mazeRender.width; x++) {
+            for (int y = 0; y < mazeRender.height; y++) {
+                NodeData nodeData = mazeRender.GetNodeInPosition(x, y);
                 nodeData.gCost = int.MaxValue;
                 nodeData.cameFromNode = null;
             }
@@ -49,6 +55,8 @@ public class NewPathFinding
                 int tentativeGcost = currentNode.gCost + CalculateDistance(currentNode, node);
                 if(tentativeGcost < node.gCost) {
                     node.cameFromNode = currentNode;
+                    Debug.DrawLine(currentNode.nodePosition.position, currentNode.nodePosition.up * 50, Color.red,60);
+                    node.IndexFrom = currentNode.Index;
                     node.gCost = tentativeGcost;
                     node.hCost = CalculateDistance(node, endNode);
 
@@ -57,12 +65,9 @@ public class NewPathFinding
                     }
 
                 }
-
-
             }
 
         }
-
 
         return null;
     }

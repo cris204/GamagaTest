@@ -20,6 +20,8 @@ public class NodeData
     public int gCost;
     public int hCost;
 
+    public NodeData cameFromNode;
+    public Vector2 IndexFrom;
     public int fCost
     {
         get
@@ -28,9 +30,6 @@ public class NodeData
         }
 
     }
-    
-    public NodeData cameFromNode;
-
     public List<NodeData> GetNeighbours(bool includeMe = false) {
          
         List<NodeData> neighboursList = new List<NodeData>();

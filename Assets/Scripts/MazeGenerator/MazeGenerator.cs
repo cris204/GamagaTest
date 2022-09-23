@@ -64,7 +64,7 @@ public static class MazeGenerator
                 Neighbour randomNeighbour = neighbours[randomIndex];
 
                 Position nPosition = randomNeighbour.position;
-                maze[current.x, current.y] &= ~randomNeighbour.shareWall;
+                maze[current.x, current.y] &= ~randomNeighbour.shareWall; //Remove share wall in bits
 
                 maze[nPosition.x, nPosition.y] &= ~GetOppositeWall(randomNeighbour.shareWall);
                 maze[nPosition.x, nPosition.y] |= WallState.VISITED;
@@ -171,7 +171,6 @@ public static class MazeGenerator
             }
 
         }
-
 
         return ApplyRecursiveBacktracker(maze, width, height);
     }

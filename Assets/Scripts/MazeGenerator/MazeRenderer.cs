@@ -5,8 +5,8 @@ using UnityEngine;
 public class MazeRenderer : MonoBehaviour
 {
     [Header("Maze config")]
-    [Range(1, 20)] public int width = 10;
-    [Range(1, 20)] public int height = 10;
+    [Range(2, 20)] public int width = 10;
+    [Range(2, 20)] public int height = 10;
     public float size = 1f;
 
     public float minMazeSize = 1;
@@ -23,7 +23,7 @@ public class MazeRenderer : MonoBehaviour
     public Transform nodesContainer;
     public List<Transform> nodesTranform;
     public List<NodeData> nodesData = new List<NodeData>();
-
+    
     #region Generate Maze
     public void GenerateMaze() {
         transform.position = Vector3.zero;

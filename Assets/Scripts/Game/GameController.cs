@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
     public MazeRenderer mazeRender;
     public PlayerController player;
     public CameraSmoothFollow gameCamera;
-    public NewPathFinding pathFinding;
+    public PathFinding pathFinding;
     public LineRenderer pathLine;
 
     [Header("Config")]
@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour
     {
         PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_BACKGROUND_PATH, 0.4f,true);
         if (pathFinding == null) {
-            pathFinding = new NewPathFinding();
+            pathFinding = new PathFinding();
         }
         GenerateMaze();
     }
